@@ -108,7 +108,6 @@ local tpus = import 'templates/tpus.libsonnet';
     ],
   },
 
-
   jaxlibHead:: {
     jaxlibVersion:: 'head',
     scriptConfig+: {
