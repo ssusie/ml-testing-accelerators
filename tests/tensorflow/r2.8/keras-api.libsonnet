@@ -25,7 +25,10 @@ local utils = import 'templates/utils.libsonnet';
     isTPUPod:: error 'Must set `isTPUPod`',
     command: utils.scriptCommand(
       |||
+        cd ~
         export PATH=$PATH:/root/google-cloud-sdk/bin
+        export PATH=$PATH:/home/xl-ml-test/.local/bin
+        export TPU_NAME=$(KUBE_GOOGLE_CLOUD_TPU_ENDPOINTS)
         gcloud source repos clone tf2-api-tests --project=xl-ml-test
         cd tf2-api-tests
         pip3 install behave
@@ -119,5 +122,7 @@ local utils = import 'templates/utils.libsonnet';
     keras_test + v2_8 + train_and_evaluate + timeouts.Hours(3),
     keras_test + v2_8 + train_validation_dataset,
     keras_test + v2_8 + transfer_learning,
+    keras_test + v2_8 + transfer_learning + common.tpuVm,
+    keras_test + v2_32 + transfer_learning + common.tpuVm,
   ],
 }
